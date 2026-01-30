@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrique González Muñoz | Perfil Profesional</title>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <header>
+            <div class="profile-badge">Enrique González Muñoz</div>
+            <h1 id="app-title">Cargando...</h1>
+            <p id="app-subtitle"></p>
+            
+            <nav>
+                <div id="menu-container">
+                    </div>
+            </nav>
+        </header>
+
+        <main id="main-display">
+            <div class="welcome-screen">
+                <h2>Bienvenido a mi CV Interactivo</h2>
+                <p>Explora mi formación y habilidades utilizando el menú superior.</p>
+            </div>
+        </main>
+
+        <footer>
+            <hr>
+            <div class="footer-content">
+                <p><strong>Enrique González Muñoz</strong> | Granada, España</p>
+                <p id="footer-status">● Proyecto desarrollado en Vanilla JS & HTML5</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        /**
+         * CLASE CurriculumManager
+         * Centraliza la información y la gestión de vistas
+         */
+        class CurriculumManager {
+            constructor() {
+                this.data = {
+                    perfil: {
+                        nombre: "Enrique González Muñoz",
+                        role: "Desarrollador Web en Formación (DAW)",
+                        resumen: "Perfil tecnológico con formación en Desarrollo de Aplicaciones Web y Bachillerato Tecnológico. Nivel B2 de Inglés. Proactivo, responsable y con gran capacidad de aprendizaje.",
+                        ubicacion: "Granada, España"
+                    },
+                    contacto: {
+                        telefono: "+34 650 37 51 61",
+                        email: "enrique.gonzalezmunoz14@gmail.com",
+                        linkedin: "https://linkedin.com/in/enriquegonzález",
+                        direccion: "Calle Jimena 41, portal 4, 2b"
+                    },
+                    skills: [
+                        "Arquitectura HTML5 & JavaScript ES6+",
+                        "Manipulación dinámica del DOM",
+                        "Inglés Profesional (Nivel B2)",
+                        "Gestión Logística y Registro de Producción",
+                        "Edición Multimedia y Redes Sociales",
+                        "Ofimática Avanzada (Microsoft Office)"
+                    ],
+                    formacion: [
+                        {
+                            titulo: "CFGS Desarrollo de Aplicaciones Web",
+                            institucion: "Instituto Privado FOC",
+                            anio: "2025 - 2027 (En curso)"
+                        },
+                        {
+                            titulo: "Bachillerato Tecnológico",
+                            institucion: "Colegio Salesianos San Juan Bosco",
+                            anio: "2023 - 2025"
+                        }
+                    ],
+                    experiencia: [
+                        {
+                            empresa: "PAYAN HERMANOS",
+                            puesto: "Auxiliar de Zona Expedición",
+                            fecha: "Campaña Verano",
+                            funciones: [
+                                "Registro técnico de datos y control de lotes.",
+                                "Gestión de traslados de materia prima.",
+                                "Mantenimiento y eficiencia en línea de expedición."
+                            ]
+                        }
+                    ]
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.renderHeader();
+                this.crearMenu();
+                this.verPerfil(); // Carga el perfil por defecto
+            }
+
+            renderHeader() {
+                document.getElementById('app-title').innerText = this.data.perfil.nombre;
+                document.getElementById('app-subtitle').innerText = `${this.data.perfil.role} | 📍 ${this.data.perfil.ubicacion}`;
+            }
+
+            crearMenu() {
+                const secciones = [
+                    { label: 'Perfil', action: () => this.verPerfil() },
+                    { label: 'Formación', action: () => this.verFormacion() },
+                    { label: 'Experiencia', action: () => this.verExperiencia() },
+                    { label: 'Habilidades', action: () => this.verSkills() },
+                    { label: 'Contacto', action: () => this.verContacto() }
+                ];
+
+                const container = document.getElementById('menu-container');
+                secciones.forEach(sec => {
+                    const btn = document.createElement('button');
+                    btn.innerText = sec.label;
+                    btn.onclick = sec.action;
+                    container.appendChild(btn);
+                });
+            }
+
+            actualizarVista(html) {
+                const main = document.getElementById('main-display');
+                main.innerHTML = html;
+            }
+
+            verPerfil() {
+                this.actualizarVista(`
+                    <h2>Sobre Mí</h2>
+                    <p>${this.data.perfil.resumen}</p>
+                    <p><strong>Idiomas:</strong> Español (Nativo) | Inglés (Certificado B2)</p>
+                    <p><strong>Movilidad:</strong> Disponibilidad total para viajar e incorporación inmediata.</p>
+                `);
+            }
+
+            verFormacion() {
+                let html = '<h2>Trayectoria Académica</h2>';
+                this.data.formacion.forEach(edu => {
+                    html += `
+                        <div style="margin-bottom: 20px; border-left: 4px solid var(--primary-color); padding-left: 15px;">
+                            <h3 style="margin:0;">${edu.titulo}</h3>
+                            <p style="margin:5px 0;"><em>${edu.institucion}</em> | <strong>${edu.anio}</strong></p>
+                        </div>
+                    `;
+                });
+                this.actualizarVista(html);
+            }
+
+            verExperiencia() {
+                let html = '<h2>Experiencia Laboral</h2>';
+                this.data.experiencia.forEach(exp => {
+                    html += `
+                        <div style="margin-bottom: 20px;">
+                            <h3>${exp.puesto} - ${exp.empresa}</h3>
+                            <p>🗓️ ${exp.fecha}</p>
+                            <ul>${exp.funciones.map(f => `<li>${f}</li>`).join('')}</ul>
+                        </div>
+                    `;
+                });
+                this.actualizarVista(html);
+            }
+
+            verSkills() {
+                const lista = this.data.skills.map(s => `<li>${s}</li>`).join('');
+                this.actualizarVista(`<h2>Skills & Herramientas</h2><ul>${lista}</ul>`);
+            }
+
+            verContacto() {
+                this.actualizarVista(`
+                    <h2>Contacto</h2>
+                    <p>Puedes contactarme a través de los siguientes canales:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 12px;"><strong>🔗 LinkedIn:</strong><br> 
+                            <a href="${this.data.contacto.linkedin}" target="_blank">linkedin.com/in/enriquegonzález</a>
+                        </li>
+                        <li style="margin-bottom: 12px;"><strong>📧 Email:</strong><br> 
+                            <a href="mailto:${this.data.contacto.email}">${this.data.contacto.email}</a>
+                        </li>
+                        <li style="margin-bottom: 12px;"><strong>📱 Teléfono:</strong><br> 
+                            ${this.data.contacto.telefono}
+                        </li>
+                        <li><strong>📍 Ubicación:</strong><br> 
+                            ${this.data.contacto.direccion}
+                        </li>
+                    </ul>
+                `);
+            }
+        }
+
+        // Ejecución al cargar el DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            new CurriculumManager();
+        });
+    </script>
+</body>
+</html>
