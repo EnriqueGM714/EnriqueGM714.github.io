@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrique González Muñoz | Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">EGM.dev</div>
+            <nav>
+                <button onclick="app.render('perfil')">Sobre mí</button>
+                <button onclick="app.render('formacion')">Formación</button>
+                <button onclick="app.render('experiencia')">Experiencia</button>
+                <button onclick="app.render('contacto')">Contacto</button>
+                <button class="theme-btn" onclick="app.toggleTheme()">
+                    <i id="theme-icon" class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <p style="color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Full Stack Trainee</p>
+        <h1>Enrique González</h1>
+        <p>Desarrollador de Aplicaciones Web enfocado en interfaces modernas y alto rendimiento. Bilingüe y apasionado por la tecnología.</p>
+    </section>
+
+    <main id="view-port">
+        </main>
+
+    <footer>
+        <p>&copy; 2026 Enrique González Muñoz. Hecho con Vanilla JS.</p>
+    </footer>
+
+    <script>
+        const app = {
+            data: {
+                linkedin: "https://linkedin.com/in/enriquegonzález",
+                email: "enrique.gonzalezmunoz14@gmail.com",
+                skills: ["JavaScript ES6+", "HTML5", "CSS3 Moderno", "Inglés B2", "Logística", "Gestión de Datos"],
+                formacion: [
+                    { t: "CFGS Desarrollo de Aplicaciones Web", c: "FOC", p: "2025 - 2027" },
+                    { t: "Bachillerato Tecnológico", c: "Salesianos San Juan Bosco", p: "2023 - 2025" }
+                ],
+                exp: [
+                    { p: "Auxiliar de Expedición", e: "PAYAN HERMANOS", d: "Registro de producción y gestión integral de expediciones." }
+                ]
+            },
+
+            toggleTheme: function() {
+                const isDark = document.body.classList.toggle('dark-mode');
+                document.getElementById('theme-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            },
+
+            views: {
+                perfil: () => `
+                <div class="section-animate">
+                    <h2>Sobre mí</h2>
+                    <div class="card-item">
+                        <p style="font-size: 1.2rem; font-weight: 500;">Soy un desarrollador en formación con una sólida base tecnológica. Me caracterizo por mi responsabilidad, mi capacidad analítica y mi enfoque en crear código limpio y eficiente.</p>
+                        <p style="margin-top: 20px; color: var(--text-muted);">📍 Granada, España | 🌍 Disponibilidad Geográfica</p>
+                    </div>
+                </div>`,
+                formacion: () => `
+                <div class="section-animate">
+                    <h2>Formación</h2>
+                    ${app.data.formacion.map(f => `
+                        <div class="card-item">
+                            <h3 style="font-size: 1.4rem; margin-bottom: 5px;">${f.t}</h3>
+                            <p style="color: var(--primary); font-weight: 700;">${f.c}</p>
+                            <p style="color: var(--text-muted);">${f.p}</p>
+                        </div>
+                    `).join('')}
+                </div>`,
+                experiencia: () => `
+                <div class="section-animate">
+                    <h2>Experiencia</h2>
+                    ${app.data.exp.map(e => `
+                        <div class="card-item">
+                            <h3 style="font-size: 1.4rem;">${e.p}</h3>
+                            <p style="font-weight: 700; margin-bottom: 10px;">${e.e}</p>
+                            <p style="color: var(--text-muted);">${e.d}</p>
+                        </div>
+                    `).join('')}
+                </div>`,
+                contacto: () => `
+                <div class="section-animate">
+                    <h2>Contacto</h2>
+                    <div class="card-item" style="display: grid; gap: 20px;">
+                        <p><strong><i class="fab fa-linkedin"></i> LinkedIn:</strong> <a href="${app.data.linkedin}" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">linkedin.com/in/enriquegonzález</a></p>
+                        <p><strong><i class="fas fa-envelope"></i> Email:</strong> ${app.data.email}</p>
+                        <p><strong><i class="fas fa-phone"></i> Teléfono:</strong> +34 650 37 51 61</p>
+                        <div style="margin-top: 10px;">
+                            ${app.data.skills.map(s => `<span class="tag">${s}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>`
+            },
+
+            render: function(view) {
+                document.getElementById('view-port').innerHTML = this.views[view]();
+            }
+        };
+
+        window.onload = () => app.render('perfil');
+    </script>
+</body>
+</html>
