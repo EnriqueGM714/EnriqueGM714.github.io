@@ -16,6 +16,7 @@
                 <button onclick="app.render('perfil')">Sobre mí</button>
                 <button onclick="app.render('formacion')">Formación</button>
                 <button onclick="app.render('experiencia')">Experiencia</button>
+                <button onclick="app.render('blog')">Blog</button>
                 <button onclick="app.render('contacto')">Contacto</button>
                 <button class="theme-btn" onclick="app.toggleTheme()">
                     <i id="theme-icon" class="fas fa-moon"></i>
@@ -49,6 +50,11 @@
                 ],
                 exp: [
                     { p: "Auxiliar de Expedición", e: "PAYAN HERMANOS", d: "Registro de producción y gestión integral de expediciones." }
+                ],
+                noticias: [
+                    { t: "WebAssembly: El futuro del rendimiento", d: "Ya no solo usamos JS; lenguajes como C++ y Rust corren en el navegador a velocidades nativas.", f: "06/02/2026" },
+                    { t: "¿El fin de las contraseñas?", d: "El estándar Passkeys está sustituyendo al login tradicional en el desarrollo web moderno.", f: "01/02/2026" },
+                    { t: "IA en el Frontend", d: "Las interfaces ahora se adaptan en tiempo real según el comportamiento del usuario mediante modelos ligeros de ML.", f: "28/01/2026" }
                 ]
             },
 
@@ -88,6 +94,19 @@
                         </div>
                     `).join('')}
                 </div>`,
+                blog: () => `
+                <div class="section-animate">
+                    <h2>Blog Tech: Noticias DAW</h2>
+                    ${app.data.noticias.map(n => `
+                        <div class="card-item">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3 style="font-size: 1.4rem; color: var(--primary);">${n.t}</h3>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">${n.f}</span>
+                            </div>
+                            <p style="margin-top: 10px; line-height: 1.6;">${n.d}</p>
+                        </div>
+                    `).join('')}
+                </div>`,
                 contacto: () => `
                 <div class="section-animate">
                     <h2>Contacto</h2>
@@ -110,5 +129,4 @@
         window.onload = () => app.render('perfil');
     </script>
 </body>
-
 </html>
